@@ -35,9 +35,9 @@ export default function AdminPage() {
         setStats({
           employees: employees.length,
           activeEmployees: employees.filter((e: any) => e.isActive).length,
-          tools: tools.length,
-          availableTools: tools.filter((t: any) => t.status === 'IN_STOCK').length,
-          issuedTools: tools.filter((t: any) => t.status === 'ISSUED').length,
+          tools: tools.reduce((sum: number, t: any) => sum + (t.quantity || 1), 0),
+          availableTools: tools.reduce((sum: number, t: any) => sum + (t.availableQuantity || t.quantity || 1), 0),
+          issuedTools: tools.reduce((sum: number, t: any) => sum + (t.issuedQuantity || 0), 0),
           writtenOffTools: tools.filter((t: any) => t.status === 'WRITTEN_OFF').length,
           activeIssuances: issuances.length,
           overdueIssuances: issuances.filter((i: any) => i.isOverdue).length
